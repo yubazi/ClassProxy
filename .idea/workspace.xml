@@ -9,7 +9,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee0af75f-4241-4b78-b0de-41cb01ab7dde" name="默认更改列表" comment="emmm">
+    <list default="true" id="ee0af75f-4241-4b78-b0de-41cb01ab7dde" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bug/classproxy/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bug/classproxy/MainActivity.java" afterDir="false" />
     </list>
@@ -247,7 +247,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594978252328</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="emmm">
+      <created>1594978448678</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1594978448678</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -285,10 +292,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1594970590733" />
-    <state x="429" y="10" key="CommitChangelistDialog2" timestamp="1594978440290">
+    <state x="429" y="10" key="CommitChangelistDialog2" timestamp="1594978447943">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="429" y="10" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1594978440290" />
+    <state x="429" y="10" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1594978447943" />
     <state x="147" y="69" width="1228" height="687" key="DiffContextDialog" timestamp="1594978077503">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
