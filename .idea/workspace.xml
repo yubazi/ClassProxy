@@ -281,7 +281,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594980442445</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="emmm">
+      <created>1594980848767</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1594980848767</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -319,10 +326,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1594970590733" />
-    <state x="429" y="10" key="CommitChangelistDialog2" timestamp="1594980441839">
+    <state x="429" y="10" key="CommitChangelistDialog2" timestamp="1594982692932">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="429" y="10" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1594980441839" />
+    <state x="429" y="10" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1594982692932" />
     <state x="147" y="69" width="1228" height="687" key="DiffContextDialog" timestamp="1594978077503">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
