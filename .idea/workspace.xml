@@ -277,14 +277,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1594970590733" />
-    <state x="429" y="10" key="CommitChangelistDialog2" timestamp="1594977835154">
+    <state x="429" y="10" key="CommitChangelistDialog2" timestamp="1594977911148">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="429" y="10" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1594977835154" />
-    <state x="147" y="69" key="DiffContextDialog" timestamp="1594976253342">
+    <state x="429" y="10" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1594977911148" />
+    <state x="147" y="69" width="1228" height="687" key="DiffContextDialog" timestamp="1594978077503">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="147" y="69" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1594976253342" />
+    <state x="147" y="69" width="1228" height="687" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1594978077503" />
     <state x="549" y="153" key="FileChooserDialogImpl" timestamp="1594974969156">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -341,6 +341,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="562" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1594976233257" />
+    <state x="555" y="203" key="git4idea.merge.GitMergeDialog" timestamp="1594978061076">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="555" y="203" key="git4idea.merge.GitMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1594978061076" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1594970940014">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
