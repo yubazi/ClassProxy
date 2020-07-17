@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 protected void afterHookedMethod(final Param param) {
                     if (param.method.getName().equals("getPackageInfo")) {
                         PackageInfo packageInfo = (PackageInfo) param.getResult();
-                        packageInfo.signatures = new Signature[]{new Signature("") {
+                        packageInfo.signatures = new Signature[]{new Signature("test") {
                             @NonNull
                             @Override
                             public String toString() {
