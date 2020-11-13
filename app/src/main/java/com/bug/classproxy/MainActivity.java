@@ -1,6 +1,7 @@
 package com.bug.classproxy;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -10,14 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.bug.proxy.Proxy;
 import com.bug.proxy.ProxyCallback;
 
 import java.lang.reflect.Field;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     @SuppressLint("PrivateApi")
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             declaredField2.setAccessible(true);
             declaredField2.set(packageManager, object);
 
+            @SuppressLint("WrongConstant")
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);
             Toast.makeText(this, packageInfo.signatures[0].toString(), Toast.LENGTH_LONG).show();
         } catch (Throwable e) {

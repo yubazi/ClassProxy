@@ -1,5 +1,6 @@
 package com.bug.proxy;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 
 import com.bug.dexmaker.dx.Code;
@@ -29,6 +30,7 @@ public class Proxy {
     static {
         //以下是初始化缓存路径
         try {
+            @SuppressLint("PrivateApi")
             Class<?> clazz = Class.forName("android.app.ActivityThread");
             Field field = clazz.getDeclaredField("sCurrentActivityThread");
             field.setAccessible(true);
@@ -46,7 +48,7 @@ public class Proxy {
             Method method = clazz.getDeclaredMethod("myPid");
             method.setAccessible(true);
             path = new File(DataDir, "BugProxy_" + method.invoke(null));
-        } catch (Throwable e) {
+        } catch (Throwable ignored) {
         }
     }
 
@@ -58,7 +60,7 @@ public class Proxy {
     private static void copyData(Object raw, Object src) {
         try {
             Class<?> clazz = raw.getClass();
-            ArrayList<Field> fs = new ArrayList<Field>();
+            ArrayList<Field> fs = new ArrayList<>();
             for (Field f : clazz.getDeclaredFields()) {
                 if (!fs.contains(f)) {
                     fs.add(f);
@@ -89,7 +91,7 @@ public class Proxy {
                 fie.setAccessible(true);
                 fie.set(src, fie.get(raw));
             }
-        } catch (Throwable e) {
+        } catch (Throwable ignored) {
         }
     }
 
@@ -485,7 +487,7 @@ public class Proxy {
                 }
             }
         }
-        return array.toArray(new Method[array.size()]);
+        return array.toArray(new Method[0]);
     }
 
     private Method[] getInterfaceMethods() {
@@ -535,7 +537,7 @@ public class Proxy {
             Class<?> clazz = null;
             try {
                 clazz = mAppClassLoader.loadClass(name);
-            } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException ignored) {
             }
             if (clazz == null) {
                 clazz = super.loadClass(name, resolve);
@@ -548,7 +550,7 @@ public class Proxy {
     }
 
     public static String random(int length, boolean allNumbers) {
-        ArrayList<Character> list = new ArrayList<Character>();
+        ArrayList<Character> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             list.add(String.valueOf(i).charAt(0));
         }
@@ -560,12 +562,12 @@ public class Proxy {
                 list.add(i);
             }
         }
-        String str = "";
+        StringBuilder str = new StringBuilder();
         Random random = new Random();
         while (str.length() < length) {
-            str += list.get(random.nextInt(list.size()));
+            str.append(list.get(random.nextInt(list.size())));
         }
-        return str;
+        return str.toString();
     }
 
 }

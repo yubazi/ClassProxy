@@ -90,7 +90,7 @@ public interface ProxyCallback {
 
         public synchronized LinkedHashMap<String, Object> getExtra() {
             if (extra == null)
-                extra = new LinkedHashMap<String, Object>();
+                extra = new LinkedHashMap<>();
             return extra;
         }
 

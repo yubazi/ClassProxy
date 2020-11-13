@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ClassProxy.iml" filepath="$PROJECT_DIR$/.idea/modules/ClassProxy.iml" group="ClassProxy" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ClassProxy-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ClassProxy-app.iml" group="ClassProxy/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="ClassProxy/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/java/java.iml" filepath="$PROJECT_DIR$/.idea/modules/java/java.iml" group="ClassProxy/java" />
     </modules>
