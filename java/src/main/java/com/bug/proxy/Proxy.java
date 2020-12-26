@@ -16,12 +16,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Random;
 
+import dalvik.system.DexClassLoader;
 import dalvik.system.InMemoryDexClassLoader;
 
 public class Proxy {
@@ -61,12 +63,12 @@ public class Proxy {
         try {
             Class<?> clazz = raw.getClass();
             ArrayList<Field> fs = new ArrayList<>();
-            for (Field f : clazz.getDeclaredFields()) {
+            for (Field f : getDeclaredFields(clazz)) {
                 if (!fs.contains(f)) {
                     fs.add(f);
                 }
             }
-            for (Field f : clazz.getFields()) {
+            for (Field f : getFields(clazz)) {
                 if (!fs.contains(f)) {
                     fs.add(f);
                 }
@@ -76,12 +78,12 @@ public class Proxy {
                 Class<?> cc = c.getSuperclass();
                 if (cc == null || cc == Object.class || cc.equals(c)) break;
                 c = cc;
-                for (Field f : c.getDeclaredFields()) {
+                for (Field f : getDeclaredFields(c)) {
                     if (!fs.contains(f)) {
                         fs.add(f);
                     }
                 }
-                for (Field f : c.getFields()) {
+                for (Field f : getFields(c)) {
                     if (!fs.contains(f)) {
                         fs.add(f);
                     }
@@ -127,9 +129,9 @@ public class Proxy {
         return eq;
     }
 
-    private static boolean deleteFile(File file) {
+    private static void deleteFile(File file) {
         if (!file.exists())
-            return false;
+            return;
         if (file.isFile()) {
             file.delete();
         } else if (file.isDirectory()) {
@@ -141,7 +143,6 @@ public class Proxy {
             }
             file.delete();
         }
-        return !file.exists();
     }
 
     public Proxy setSuperClass(Class<?> SuperClass) {
@@ -164,7 +165,7 @@ public class Proxy {
         return this;
     }
 
-    public Object create() throws Throwable {
+    public <T> T create() throws Throwable {
         if (path == null) {
             throw new RuntimeException("tmp dir no init.");
         }
@@ -242,6 +243,7 @@ public class Proxy {
             for (int i = 0; i < args.length; i++) {
                 args[i] = code.getParameter(i, parameterTypes[i]);
             }
+            TypeId<?> resultType = getType(code, method.getReturnType());
             Local<?> result = returnType == TypeId.VOID ? null : code.newLocal(returnType);
             code.invokeSuper((MethodId<Object, Object>) TypeId.get(method.getDeclaringClass()).getMethod(returnType, name, parameterTypes), (Local<Object>) result, code.getThis(newClass), args);
             if (returnType == TypeId.VOID) {
@@ -353,41 +355,24 @@ public class Proxy {
             Class<?> type = method.getReturnType();
             if (type != void.class) {
                 //基本类型时强转对应包装类，并获取值存入返回值寄存器
+                code.castType(tmpObj, resultType);
                 if (type == int.class) {
-                    TypeId<?> get = TypeId.get(Integer.class);
-                    code.castType(tmpObj, get);
-                    code.invokeVirtual((MethodId<Object, Integer>) get.getMethod(TypeId.INT, "intValue"), (Local<Integer>) result, tmpObj);
+                    code.invokeVirtual((MethodId<Object, Integer>) ((TypeId<?>) TypeId.get(Integer.class)).getMethod(TypeId.INT, "intValue"), (Local<Integer>) result, tmpObj);
                 } else if (type == byte.class) {
-                    TypeId<?> get = TypeId.get(Byte.class);
-                    code.castType(tmpObj, get);
-                    code.invokeVirtual((MethodId<Object, Byte>) get.getMethod(TypeId.BYTE, "byteValue"), (Local<Byte>) result, tmpObj);
+                    code.invokeVirtual((MethodId<Object, Byte>) ((TypeId<?>) TypeId.get(Byte.class)).getMethod(TypeId.BYTE, "byteValue"), (Local<Byte>) result, tmpObj);
                 } else if (type == short.class) {
-                    TypeId<?> get = TypeId.get(Short.class);
-                    code.castType(tmpObj, get);
-                    code.invokeVirtual((MethodId<Object, Short>) get.getMethod(TypeId.SHORT, "shortValue"), (Local<Short>) result, tmpObj);
+                    code.invokeVirtual((MethodId<Object, Short>) ((TypeId<?>) TypeId.get(Short.class)).getMethod(TypeId.SHORT, "shortValue"), (Local<Short>) result, tmpObj);
                 } else if (type == long.class) {
-                    TypeId<?> get = TypeId.get(Long.class);
-                    code.castType(tmpObj, get);
-                    code.invokeVirtual((MethodId<Object, Long>) get.getMethod(TypeId.LONG, "longValue"), (Local<Long>) result, tmpObj);
+                    code.invokeVirtual((MethodId<Object, Long>) ((TypeId<?>) TypeId.get(Long.class)).getMethod(TypeId.LONG, "longValue"), (Local<Long>) result, tmpObj);
                 } else if (type == float.class) {
-                    TypeId<?> get = TypeId.get(Float.class);
-                    code.castType(tmpObj, get);
-                    code.invokeVirtual((MethodId<Object, Float>) get.getMethod(TypeId.FLOAT, "floatValue"), (Local<Float>) result, tmpObj);
+                    code.invokeVirtual((MethodId<Object, Float>) ((TypeId<?>) TypeId.get(Float.class)).getMethod(TypeId.FLOAT, "floatValue"), (Local<Float>) result, tmpObj);
                 } else if (type == char.class) {
-                    TypeId<?> get = TypeId.get(Character.class);
-                    code.castType(tmpObj, get);
-                    code.invokeVirtual((MethodId<Object, Character>) get.getMethod(TypeId.CHAR, "charValue"), (Local<Character>) result, tmpObj);
+                    code.invokeVirtual((MethodId<Object, Character>) ((TypeId<?>) TypeId.get(Character.class)).getMethod(TypeId.CHAR, "charValue"), (Local<Character>) result, tmpObj);
                 } else if (type == double.class) {
-                    TypeId<?> get = TypeId.get(Double.class);
-                    code.castType(tmpObj, get);
-                    code.invokeVirtual((MethodId<Object, Double>) get.getMethod(TypeId.DOUBLE, "doubleValue"), (Local<Double>) result, tmpObj);
+                    code.invokeVirtual((MethodId<Object, Double>) ((TypeId<?>) TypeId.get(Double.class)).getMethod(TypeId.DOUBLE, "doubleValue"), (Local<Double>) result, tmpObj);
                 } else if (type == boolean.class) {
-                    TypeId<?> get = TypeId.get(Boolean.class);
-                    code.castType(tmpObj, get);
-                    code.invokeVirtual((MethodId<Object, Boolean>) get.getMethod(TypeId.BOOLEAN, "booleanValue"), (Local<Boolean>) result, tmpObj);
+                    code.invokeVirtual((MethodId<Object, Boolean>) ((TypeId<?>) TypeId.get(Boolean.class)).getMethod(TypeId.BOOLEAN, "booleanValue"), (Local<Boolean>) result, tmpObj);
                 } else {
-                    //不是基本类型，强制转换为返回值的类型
-                    code.castType(tmpObj, returnType);
                     //移动缓存寄存器到返回值寄存器
                     code.move((Local<Object>) result, (Local<Object>) tmpObj);
                 }
@@ -423,14 +408,14 @@ public class Proxy {
             }
             //dex文件
             File dexfile = new File(path, SuperClass.getName() + ".dex");
+            File cache = new File(path, "cache");
+            if (!cache.exists())
+                cache.mkdirs();
             //写入数据
             FileOutputStream output = new FileOutputStream(dexfile);
             output.write(generate);
             output.close();
-            //反射调用类加载器(开发环境使用的java工程，所以用的反射了)
-            loader = (ClassLoader) Class.forName("dalvik.system.DexClassLoader")
-                    .getConstructor(String.class, String.class, String.class, ClassLoader.class)
-                    .newInstance(dexfile.getPath(), path.getPath(), null, new FixClassLoader(SuperClass.getClassLoader(), Proxy.class.getClassLoader()));
+            loader = new DexClassLoader(dexfile.getPath(), cache.getPath(), null, new FixClassLoader(SuperClass.getClassLoader(), Proxy.class.getClassLoader()));
             //加载完毕直接删除缓存目录
             deleteFile(path);
         }
@@ -448,17 +433,41 @@ public class Proxy {
             clazz.getField("raw_Object").set(newInstance, rawObject);
             copyData(rawObject, newInstance);
         }
-        return newInstance;
+        return (T) newInstance;
     }
 
-    private Method[] getMethods() {
+    private TypeId<?> getType(Code code, Class<?> type) {
+        TypeId<?> id;
+        if (type == int.class) {
+            id = TypeId.get(Integer.class);
+        } else if (type == byte.class) {
+            id = TypeId.get(Byte.class);
+        } else if (type == short.class) {
+            id = TypeId.get(Short.class);
+        } else if (type == long.class) {
+            id = TypeId.get(Long.class);
+        } else if (type == float.class) {
+            id = TypeId.get(Float.class);
+        } else if (type == char.class) {
+            id = TypeId.get(Character.class);
+        } else if (type == double.class) {
+            id = TypeId.get(Double.class);
+        } else if (type == boolean.class) {
+            id = TypeId.get(Boolean.class);
+        } else {
+            id = TypeId.get(type);
+        }
+        return id;
+    }
+
+    private Method[] getMethods() throws InvocationTargetException, IllegalAccessException {
         ArrayList<Method> array = new ArrayList<>();
-        for (Method con : SuperClass.getDeclaredMethods()) {
+        for (Method con : getDeclaredMethods(SuperClass)) {
             if (!contains(array, con) && !Modifier.isStatic(con.getModifiers())) {
                 array.add(con);
             }
         }
-        for (Method con : SuperClass.getMethods()) {
+        for (Method con : getMethods(SuperClass)) {
             if (!contains(array, con) && !Modifier.isStatic(con.getModifiers())) {
                 array.add(con);
             }
@@ -469,12 +478,12 @@ public class Proxy {
             if (cc == null || cc.equals(clazz))
                 break;
             clazz = cc;
-            for (Method con : clazz.getDeclaredMethods()) {
+            for (Method con : getDeclaredMethods(clazz)) {
                 if (!contains(array, con) && !Modifier.isStatic(con.getModifiers())) {
                     array.add(con);
                 }
             }
-            for (Method con : clazz.getMethods()) {
+            for (Method con : getMethods(clazz)) {
                 if (!contains(array, con) && !Modifier.isStatic(con.getModifiers())) {
                     array.add(con);
                 }
@@ -490,15 +499,15 @@ public class Proxy {
         return array.toArray(new Method[0]);
     }
 
-    private Method[] getInterfaceMethods() {
+    private Method[] getInterfaceMethods() throws InvocationTargetException, IllegalAccessException {
         ArrayList<Method> array = new ArrayList<>();
         for (Class<?> interfaceClass : interfaces) {
-            for (Method con : interfaceClass.getDeclaredMethods()) {
+            for (Method con : getDeclaredMethods(interfaceClass)) {
                 if (!contains(array, con) && !Modifier.isStatic(con.getModifiers())) {
                     array.add(con);
                 }
             }
-            for (Method con : interfaceClass.getMethods()) {
+            for (Method con : getMethods(interfaceClass)) {
                 if (!contains(array, con) && !Modifier.isStatic(con.getModifiers())) {
                     array.add(con);
                 }
@@ -509,12 +518,12 @@ public class Proxy {
                 if (cc == null || cc.equals(clazz))
                     break;
                 clazz = cc;
-                for (Method con : clazz.getDeclaredMethods()) {
+                for (Method con : getDeclaredMethods(clazz)) {
                     if (!contains(array, con) && !Modifier.isStatic(con.getModifiers())) {
                         array.add(con);
                     }
                 }
-                for (Method con : clazz.getMethods()) {
+                for (Method con : getMethods(clazz)) {
                     if (!contains(array, con) && !Modifier.isStatic(con.getModifiers())) {
                         array.add(con);
                     }
@@ -570,4 +579,36 @@ public class Proxy {
         return str.toString();
     }
 
+    private static Method getFields;
+    private static Method getDeclaredFields;
+    private static Method getMethods;
+    private static Method getDeclaredMethods;
+
+    static {
+        try {
+            Class<?> clazz = Class.class;
+            getFields = clazz.getMethod("getFields");
+            getDeclaredFields = clazz.getMethod("getDeclaredFields");
+            getMethods = clazz.getMethod("getMethods");
+            getDeclaredMethods = clazz.getMethod("getDeclaredMethods");
+        } catch (NoSuchMethodException ignored) {
+        }
+    }
+
+    private static Field[] getFields(Class<?> clazz) throws InvocationTargetException, IllegalAccessException {
+        return (Field[]) getFields.invoke(clazz);
+    }
+
+    private static Field[] getDeclaredFields(Class<?> clazz) throws InvocationTargetException, IllegalAccessException {
+        return (Field[]) getDeclaredFields.invoke(clazz);
+    }
+
+
+    private static Method[] getMethods(Class<?> clazz) throws InvocationTargetException, IllegalAccessException {
+        return (Method[]) getMethods.invoke(clazz);
+    }
+
+    private static Method[] getDeclaredMethods(Class<?> clazz) throws InvocationTargetException, IllegalAccessException {
+        return (Method[]) getDeclaredMethods.invoke(clazz);
+    }
 }

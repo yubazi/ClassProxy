@@ -70,4 +70,8 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
     }
+
+    public interface Test {
+        String test(String string, int i);
+    }
 }

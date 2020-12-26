@@ -53,8 +53,8 @@ public interface ProxyCallback {
         public Method method;
         public Object thisObject;
         public Object[] args;
-        public LinkedHashMap<String, Object> extra;
-        public boolean returnEarly = false;
+        private LinkedHashMap<String, Object> extra;
+        private boolean returnEarly = false;
         private Object result = null;
         private Throwable throwable = null;
 
