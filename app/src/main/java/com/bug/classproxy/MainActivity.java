@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -49,7 +50,7 @@ public class MainActivity extends Activity {
                             @NonNull
                             @Override
                             public String toString() {
-                                return "就这？";
+                                return "sign_info";
                             }
                         }};
                     }
@@ -66,12 +67,62 @@ public class MainActivity extends Activity {
             @SuppressLint("WrongConstant")
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);
             Toast.makeText(this, packageInfo.signatures[0].toString(), Toast.LENGTH_LONG).show();
+
+            proxy = new Proxy();
+            proxy.setInterfaces(Test.class);
+            ProxyCallback proxyCallback = (proxyObject, method, args) -> {
+                if ("test".equals(method.getName())) {
+                    return "call interface method!\n" + args[0];
+                }
+                return null;
+            };
+            proxy.setCallback(proxyCallback);
+            Test test = proxy.create();
+            Toast.makeText(this, test.test("arg", 0), Toast.LENGTH_LONG).show();
+
+            proxy = new Proxy();
+            proxy.setSuperClass(Test2.class);
+            proxy.setCallback(proxyCallback);
+            Test2 test2 = proxy.create();
+            Toast.makeText(this, test2.test("arg2", 0), Toast.LENGTH_LONG).show();
+
+
+            proxy = new Proxy();
+            proxy.setSuperClass(Player.class);
+            Player player = new Player("张三");
+            proxy.setRawObject(player);
+            proxy.setCallback(new ProxyCallback.Hook() {
+                @Override
+                protected void afterHookedMethod(Param param) throws Throwable {
+                    super.afterHookedMethod(param);
+                    param.setResult(param.getResult() + "他老爹");
+                }
+            });
+            Player p = proxy.create();
+            Toast.makeText(this, p.getName(), Toast.LENGTH_LONG).show();
         } catch (Throwable e) {
             e.printStackTrace();
+            Log.e("BugHook", Log.getStackTraceString(e));
         }
     }
 
     public interface Test {
         String test(String string, int i);
+    }
+
+    public abstract static class Test2 {
+        public abstract String test(String string, int i);
+    }
+
+    public class Player {
+        private String name;
+
+        public Player(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

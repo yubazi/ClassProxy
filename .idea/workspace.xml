@@ -6,35 +6,30 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="[A-Z]/BugHook" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee0af75f-4241-4b78-b0de-41cb01ab7dde" name="默认更改列表" comment="emmm">
-      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.6.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.6.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.6.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <changelist_data name="" email="" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.6.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.6.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/jarAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.6.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bug/classproxy/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bug/classproxy/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/java/src/main/java/com/bug/proxy/Proxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/src/main/java/com/bug/proxy/Proxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/src/main/java/com/bug/proxy/ProxyCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/src/main/java/com/bug/proxy/ProxyCallback.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="192.168.1.5:5666" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="192.168.1.5:5555" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -78,7 +73,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Background" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
     <property name="show.do.not.copy.http.proxy.settings.to.gradle" value="false" />
   </component>
   <component name="PsdUISettings">
@@ -330,7 +325,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605238450753</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="emmm">
+      <created>1608967778493</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1608967778493</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -364,25 +366,33 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="734" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1605237848513" />
-    <state width="2517" height="274" key="GridCell.Tab.0.bottom" timestamp="1608967763792">
+    <state x="1085" y="409" key="#com.intellij.ide.util.MemberChooser" timestamp="1612768665052">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="274" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1608967763792" />
-    <state width="2517" height="274" key="GridCell.Tab.0.center" timestamp="1608967763792">
+    <state x="1085" y="409" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1612768665052" />
+    <state width="2517" height="274" key="GridCell.Tab.0.bottom" timestamp="1612768711111">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="274" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1608967763792" />
-    <state width="2517" height="274" key="GridCell.Tab.0.left" timestamp="1608967763792">
+    <state width="2517" height="274" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1612768711111" />
+    <state width="2517" height="274" key="GridCell.Tab.0.center" timestamp="1612768711111">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="274" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1608967763792" />
-    <state width="2517" height="274" key="GridCell.Tab.0.right" timestamp="1608967763792">
+    <state width="2517" height="274" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1612768711111" />
+    <state width="2517" height="274" key="GridCell.Tab.0.left" timestamp="1612768711111">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="274" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1608967763792" />
-    <state x="872" y="433" key="Vcs.Push.Dialog.v2" timestamp="1605238455034">
+    <state width="2517" height="274" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1612768711111" />
+    <state width="2517" height="274" key="GridCell.Tab.0.right" timestamp="1612768711111">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="433" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1605238455034" />
+    <state width="2517" height="274" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1612768711111" />
+    <state x="781" y="342" key="SettingsEditor" timestamp="1612768786323">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="781" y="342" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1612768786323" />
+    <state x="872" y="433" key="Vcs.Push.Dialog.v2" timestamp="1608967916138">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="872" y="433" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1608967916138" />
   </component>
 </project>

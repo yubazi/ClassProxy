@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 import dalvik.system.DexClassLoader;
@@ -165,7 +166,7 @@ public class Proxy {
         return this;
     }
 
-    public <T> T create() throws Throwable {
+    public Class<?> createClass() throws Throwable {
         if (path == null) {
             throw new RuntimeException("tmp dir no init.");
         }
@@ -400,9 +401,10 @@ public class Proxy {
         byte[] generate = dexMaker.generate();
         ClassLoader loader;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            loader = new InMemoryDexClassLoader(ByteBuffer.wrap(generate), new FixClassLoader(SuperClass.getClassLoader(), Proxy.class.getClassLoader()));
+            loader = new InMemoryDexClassLoader(ByteBuffer.wrap(generate), new FixClassLoader(SuperClass.getClassLoader(), getClassLoaderList()));
         } else {
             //缓存目录不存在则创建
+            File path = new File(Proxy.path.getPath() + random(5, false));
             if (!path.exists()) {
                 path.mkdirs();
             }
@@ -415,25 +417,16 @@ public class Proxy {
             FileOutputStream output = new FileOutputStream(dexfile);
             output.write(generate);
             output.close();
-            loader = new DexClassLoader(dexfile.getPath(), cache.getPath(), null, new FixClassLoader(SuperClass.getClassLoader(), Proxy.class.getClassLoader()));
+            loader = new DexClassLoader(dexfile.getPath(), cache.getPath(), null, new FixClassLoader(SuperClass.getClassLoader(), getClassLoaderList()));
             //加载完毕直接删除缓存目录
             deleteFile(path);
         }
         //加载代理类
-        Class<?> clazz = loader.loadClass(ClassName.substring(0, ClassName.length() - 1) + "$Proxy");
-        //获取之前定义好的无参数构造器
-        Constructor<?> constructor = clazz.getConstructor();
-        constructor.setAccessible(true);
-        //生成对象
-        Object newInstance = constructor.newInstance();
-        //设置回调
-        clazz.getMethod("setCallback", ProxyCallback.class).invoke(newInstance, this.callback);
-        //原对象不为空时复制字段数据
-        if (rawObject != null) {
-            clazz.getField("raw_Object").set(newInstance, rawObject);
-            copyData(rawObject, newInstance);
-        }
-        return (T) newInstance;
+        return loader.loadClass(ClassName.substring(0, ClassName.length() - 1) + "$Proxy");
+    }
+
+    public <T> T create() throws Throwable {
+        return (T) create(createClass(), rawObject, callback);
     }
 
     private TypeId<?> getType(Code code, Class<?> type) {
@@ -533,10 +526,20 @@ public class Proxy {
         return array.toArray(new Method[0]);
     }
 
-    private static class FixClassLoader extends ClassLoader {
-        private final ClassLoader mAppClassLoader;
+    private ClassLoader[] getClassLoaderList() {
+        HashSet<ClassLoader> list = new HashSet<>();
+        list.add(Proxy.class.getClassLoader());
+        if (interfaces != null)
+            for (Class<?> clazz : interfaces) {
+                list.add(clazz.getClassLoader());
+            }
+        return list.toArray(new ClassLoader[0]);
+    }
 
-        public FixClassLoader(ClassLoader parent, ClassLoader appClassLoader) {
+    private static class FixClassLoader extends ClassLoader {
+        private final ClassLoader[] mAppClassLoader;
+
+        public FixClassLoader(ClassLoader parent, ClassLoader[] appClassLoader) {
             super(parent);
             mAppClassLoader = appClassLoader;
         }
@@ -544,9 +547,12 @@ public class Proxy {
         @Override
         protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
             Class<?> clazz = null;
-            try {
-                clazz = mAppClassLoader.loadClass(name);
-            } catch (ClassNotFoundException ignored) {
+            int i = 0;
+            while (clazz == null && i < mAppClassLoader.length) {
+                try {
+                    clazz = mAppClassLoader[i++].loadClass(name);
+                } catch (ClassNotFoundException ignored) {
+                }
             }
             if (clazz == null) {
                 clazz = super.loadClass(name, resolve);
@@ -577,6 +583,26 @@ public class Proxy {
             str.append(list.get(random.nextInt(list.size())));
         }
         return str.toString();
+    }
+
+    public static <T> T create(Class<?> clazz, ProxyCallback callback) throws Throwable {
+        return create(clazz, null, callback);
+    }
+
+    public static <T> T create(Class<?> clazz, Object rawObject, ProxyCallback callback) throws Throwable {
+        //获取之前定义好的无参数构造器
+        Constructor<?> constructor = clazz.getConstructor();
+        constructor.setAccessible(true);
+        //生成对象
+        Object newInstance = constructor.newInstance();
+        //设置回调
+        clazz.getMethod("setCallback", ProxyCallback.class).invoke(newInstance, callback);
+        //原对象不为空时复制字段数据
+        if (rawObject != null) {
+            clazz.getField("raw_Object").set(newInstance, rawObject);
+            copyData(rawObject, newInstance);
+        }
+        return (T) newInstance;
     }
 
     private static Method getFields;
